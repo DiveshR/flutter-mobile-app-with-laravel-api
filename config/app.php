@@ -126,6 +126,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'currency_symbol' => env('CURRENCY_SYMBOL', '₹'),
+
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver
