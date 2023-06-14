@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Resources\v1\TransactionResource;
+use App\Http\Requests\v1\StoreTransactionRequest;
 
 class TransactionController extends Controller
 {
@@ -20,10 +21,14 @@ class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTransactionRequest $request)
     {
-        //
+        $transaction = auth()->user()->transactions()->create($request->validated());
+
+
+        return new TransactionResource($transaction);
     }
+
 
     /**
      * Display the specified resource.

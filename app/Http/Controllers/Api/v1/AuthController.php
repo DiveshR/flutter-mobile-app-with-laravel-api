@@ -49,4 +49,13 @@ class AuthController extends Controller
     return $user->createToken($request->device_name)->plainTextToken;
 
     }
+
+    public function logout(Request $request)
+    {
+        $user = User::where('email',$request->email)->first();
+        if($user){
+            $user->tokens()->delete();
+        }
+        return response()->noContent();
+    }
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Resources\v1\CategoryResource;
+use Illuminate\Support\Str;
+use App\Http\Requests\v1\StoreCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -20,9 +22,23 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        //
+
+    /**
+    * Different ways to store auth user_id to categories table
+    * below are some
+    */
+        //First Way
+
+        // $category = Category::create($request->validated() + ['user_id' => auth()->id()]);
+
+        //Second Way --Recommended Way
+        $category = auth()->user()->categories()->create($request->validated());
+
+// $category = Category::create(['name' => 'Test','user_id'=> auth()->id()]);
+
+        return new CategoryResource($category);
     }
 
     /**
