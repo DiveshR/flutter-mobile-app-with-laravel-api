@@ -41,9 +41,10 @@ class TransactionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Transaction $transaction)
+    public function update(StoreTransactionRequest $request, Transaction $transaction)
     {
-        //
+        $transaction->update($request->validated());
+        return new TransactionResource($transaction);
     }
 
     /**
@@ -51,6 +52,7 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction)
     {
-        //
+        $transaction->delete();
+        return response()->noContent();
     }
 }
